@@ -1,4 +1,4 @@
-import javax.lang.model.util.ElementScanner6;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-public class GUI_Snake extends JFrame {
+public class GUI_Snake extends JFrame implements Runnable{
 
     Container contenedor;
     String matriz[][] = new String[20][20];
@@ -37,6 +37,22 @@ public class GUI_Snake extends JFrame {
         coordenadas_ant.add(0);
 
     }
+    @Override
+    public void run() {
+        while(true){
+            
+            try {
+                System.out.println("ESTADOS: arriba:"+arriba + " abajo:"+abajo + " izq:"+izquierda + " der:"+derecha);
+                repaint();
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+       
+    }
+
 
     public void limpiarMatriz() {
         for (int i = 0; i < 20; i++) {
@@ -344,19 +360,19 @@ public class GUI_Snake extends JFrame {
             System.out.println(e.getKeyCode());
             if (e.getKeyCode() == 38) {// arriba
                 arriba = true;
-                repaint();
+              
             } else {
                 arriba = false;
             }
             if (e.getKeyCode() == 40) {// abajo
                 abajo = true;
-                repaint();
+               
             } else {
                 abajo = false;
             }
             if (e.getKeyCode() == 37) {// izquierda
                 izquierda = true;
-                repaint();
+               
 
             } else {
                 izquierda = false;
@@ -365,7 +381,7 @@ public class GUI_Snake extends JFrame {
 
             if (e.getKeyCode() == 39) {// derecha
                 derecha = true;
-                repaint();
+           
             } else {
                 derecha = false;
             }
@@ -381,6 +397,9 @@ public class GUI_Snake extends JFrame {
 
     public static void main(String[] args) {
         GUI_Snake s = new GUI_Snake();
+        Thread n  = new Thread(s);
+        n.start();
     }
 
+    
 }
